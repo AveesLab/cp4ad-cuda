@@ -1,4 +1,4 @@
-# cp4ad-cuda
+# [Week 6-7] CUDA
 ```
 $ git clone https://github.com/AveesLab/cp4ad-cuda.git
 $ cd cp4ad-cuda/
@@ -10,7 +10,7 @@ $ cd cp4ad-cuda/
 $ gcc -o <excution file name> <source code file name>
 ```
 
-**cuda**
+**CUDA**
 ```
 $ nvcc -o <excution file name> <source code file name>
 ```
