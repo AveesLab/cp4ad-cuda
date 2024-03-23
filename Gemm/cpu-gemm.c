@@ -1,4 +1,4 @@
-#include "common.c"
+#include "utils.c"
 
 int alpha = 1;
 int beta = 1;
@@ -8,7 +8,7 @@ int main(void) {
     float matA[matsize * matsize];
     float matB[matsize * matsize];
     float matC[matsize * matsize];
-	printMat( "Before_matC", matC, matsize, matsize );
+	// printMat( "Before_matC", matC, matsize, matsize );
 	srand( 0 );
 	setNormalizedRandomData( matA, matsize * matsize );
 	setNormalizedRandomData( matB, matsize * matsize );
@@ -31,6 +31,6 @@ int main(void) {
 	printf("matrix size = matsize * matsize = %d * %d\n", matsize, matsize);
 	printMat( "matA", matA, matsize, matsize );
 	printMat( "matB", matB, matsize, matsize );
-	printMat( "After_matC", matC, matsize, matsize );
+	printMat( "matC", matC, matsize, matsize );
 	return 0;
 }

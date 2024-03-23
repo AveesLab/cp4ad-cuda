@@ -1,4 +1,4 @@
-#include "common.c"
+#include "utils.c"
 
 __global__ void add_kernel( int* c, int* a, int* b ) {
 	int i = threadIdx.x;

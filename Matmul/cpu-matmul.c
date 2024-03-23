@@ -1,4 +1,4 @@
-#include "common.c"
+#include "utils.c"
 
 #define matsize 100
 
