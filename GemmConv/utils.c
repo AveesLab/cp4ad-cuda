@@ -4,27 +4,20 @@
 #include <stdbool.h>
 
 
-void im2col(float *mat, int matsize, int kernelsize, int in_channel, int out_channel, bool isFeatureMap) {
-	if (isFeatureMap) {
-		float new_mat[(matsize-(kernelsize/2)) * (matsize-(kernelsize/2)) * kernelsize * kernelsize * in_channel];
-		int i;
-
-
-		
-		for (int dy = 0; dy < kernelsize; ++dy)
-			for (int dx = 0; dx < kernelsize; ++dx) {
-				int indNew = dy * (matsize-(kernelsize/2)) * (matsize-(kernelsize/2)) + dx;
-				new_mat[indNew] = mat[i];
+void im2col(float *mat, float *new_mat, int matsize, int kernelsize, int in_channel) {
+	for (int x = 0; x < (matsize - kernelsize / 2) * (matsize - kernelsize / 2); ++x) {
+		int nrow = x / (matsize - kernelsize / 2);
+		int ncol = x % (matsize - kernelsize / 2);
+		for (int k_c = 0; k_c < in_channel; ++k_c) {
+			for (int k_y = 0; k_y < kernelsize; ++k_y) {
+				for (int k_x = 0; k_x < kernelsize; ++k_x) {
+					int idx = k_c * matsize * matsize + k_y * matsize + k_x + nrow * matsize + ncol; // mat idx
+					new_mat[x * kernelsize * kernelsize * in_channel + k_c * in_channel + k_y * kernelsize + k_x * kernelsize] = mat[idx];
+				}
 			}
-
-		return new_mat;
+		}
 	}
-	float new_filter[kernelsize * kernelsize * in_channel];
-	
-
-	return new_filter;
 }
-
 
 
 

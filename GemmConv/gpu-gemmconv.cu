@@ -7,7 +7,7 @@ int out_channel = 1;
 int kernelsize = 3;
 int padding = 0;
 
-
+// im2col(float *mat, float *new_mat, int matsize, int kernelsize, int in_channel, int out_channel) {
 __global__ void kernel_gemmconv() {
 
 }
@@ -20,8 +20,8 @@ int main(void) {
 	srand( 0 );
 	setNormalizedRandomData( matA, matsize * matsize * in_channel );
 	setNormalizedRandomData( matF, kernelsize * kernelsize * in_channel );
-    float new_matA = im2col();
-    float new_matC = im2col();
+    float new_matA[] = im2col();
+    float new_matF[] = im2col();
 
     float* dev_matA = NULL;
     float* dev_matF = NULL;

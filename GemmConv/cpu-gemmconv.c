@@ -7,19 +7,25 @@ int kernelsize = 3;
 int padding = 0;
 
 
+
 int main(void) {
     float matA[matsize * matsize * in_channel];
     float matF[kernelsize * kernelsize * in_channel]; // Filter
-    float matC[10];
+    float matC[(matsize - kernelsize / 2) * (matsize - kernelsize / 2)];
 	srand( 0 );
 	setNormalizedRandomData( matA, matsize * matsize * in_channel );
 	setNormalizedRandomData( matF, kernelsize * kernelsize * in_channel );
-    float new_matA[] = im2col();
-    float new_matF[] = im2col();
-
-
-	clock_t start = clock();
-	
+    float new_matA[kernelsize * kernelsize * in_channel * (matsize - kernelsize / 2) * (matsize - kernelsize / 2)];
+    im2col( matA, new_matA, matsize, kernelsize, in_channel );
+    clock_t start = clock();
+    for (int y = 0; y < (matsize - kernelsize / 2) * (matsize - kernelsize / 2); ++y) {
+        float ans = 0.0f;
+        for (int x = 0; x < kernelsize * kernelsize * in_channel; ++x) {
+            int indNewA = y * (matsize - kernelsize / 2) * (matsize - kernelsize / 2) + x;
+            ans += (matF[x] * new_matA[indNewA]); 
+        }
+        matC[y] = ans;
+    }
 	clock_t end = clock();
     double execution_time = (double)(end - start) / CLOCKS_PER_SEC;
     printf("Execution time: %d usec\n", (int) (execution_time * 1000000));
