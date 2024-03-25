@@ -12,7 +12,8 @@ void im2col(float *mat, float *new_mat, int matsize, int kernelsize, int in_chan
 			int u = y % kernelsize;
 			int v = y / kernelsize;
 			int w = (y / kernelsize) % kernelsize;
-			new_mat[x * (matsize - kernelsize / 2) * (matsize - kernelsize / 2) + y] = mat[start_idx + w * matsize * matsize + v * matsize + u];
+			int value = mat[start_idx + w * matsize * matsize + v * matsize + u];
+			new_mat[x * kernelsize * kernelsize * in_channel + y] = 0;
 		}
 	}
 }

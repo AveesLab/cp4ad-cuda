@@ -1,6 +1,6 @@
 #include "utils.c"
 
-int matsize = 32;
+int matsize = 224;
 int in_channel = 3;
 int out_channel = 1;
 int kernelsize = 3;
