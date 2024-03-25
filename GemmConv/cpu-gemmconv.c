@@ -1,6 +1,6 @@
 #include "utils.c"
 
-int matsize = 224;
+int matsize = 32;
 int in_channel = 3;
 int out_channel = 1;
 int kernelsize = 3;
@@ -21,7 +21,7 @@ int main(void) {
     for (int y = 0; y < (matsize - kernelsize / 2) * (matsize - kernelsize / 2); ++y) {
         float ans = 0.0f;
         for (int x = 0; x < kernelsize * kernelsize * in_channel; ++x) {
-            int indNewA = y * (matsize - kernelsize / 2) * (matsize - kernelsize / 2) + x;
+            int indNewA = y * kernelsize * kernelsize * in_channel + x;
             ans += (matF[x] * new_matA[indNewA]); 
         }
         matC[y] = ans;

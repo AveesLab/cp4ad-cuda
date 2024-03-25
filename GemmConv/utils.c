@@ -1,20 +1,18 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
-#include <stdbool.h>
 
 
 void im2col(float *mat, float *new_mat, int matsize, int kernelsize, int in_channel) {
 	for (int x = 0; x < (matsize - kernelsize / 2) * (matsize - kernelsize / 2); ++x) {
 		int nrow = x / (matsize - kernelsize / 2);
 		int ncol = x % (matsize - kernelsize / 2);
-		for (int k_c = 0; k_c < in_channel; ++k_c) {
-			for (int k_y = 0; k_y < kernelsize; ++k_y) {
-				for (int k_x = 0; k_x < kernelsize; ++k_x) {
-					int idx = k_c * matsize * matsize + k_y * matsize + k_x + nrow * matsize + ncol; // mat idx
-					new_mat[x * kernelsize * kernelsize * in_channel + k_c * in_channel + k_y * kernelsize + k_x * kernelsize] = mat[idx];
-				}
-			}
+		int start_idx = nrow * matsize + ncol;
+		for (int y = 0; y < kernelsize * kernelsize * in_channel; ++y) {
+			int u = y % kernelsize;
+			int v = y / kernelsize;
+			int w = (y / kernelsize) % kernelsize;
+			new_mat[x * (matsize - kernelsize / 2) * (matsize - kernelsize / 2) + y] = mat[start_idx + w * matsize * matsize + v * matsize + u];
 		}
 	}
 }
