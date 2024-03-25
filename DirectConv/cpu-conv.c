@@ -1,6 +1,6 @@
 #include "utils.c"
 
-int matsize = 224;
+int matsize = 32;
 int kernelsize = 3;
 
 int padding = 0;
