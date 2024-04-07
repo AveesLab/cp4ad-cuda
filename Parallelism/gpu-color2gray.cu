@@ -15,9 +15,9 @@ __global__ void GrayKernel( uint8_t* Gray_Img, uint8_t* Color_Img, int width, in
     if (gx < width && gy < height) {
         uint8_t Luminance = 0;
 
-        int R_idx = gx + gy * height;
+        int B_idx = gx + gy * height;
         int G_idx = gx + gy * height + width * height;
-        int B_idx = gx + gy * height + width * height * 2;
+        int R_idx = gx + gy * height + width * height * 2;
         
         Luminance = Color_Img[R_idx] * 0.21 + Color_Img[G_idx] * 0.72 + Color_Img[B_idx] * 0.07;
         if (Luminance > 255) Luminance = 255;
