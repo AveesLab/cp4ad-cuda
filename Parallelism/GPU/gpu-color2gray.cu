@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdint.h>
 #include <time.h>
-
+#include "utils.h"
 
 
 __global__ void GrayKernel( uint8_t* Gray_Img, uint8_t* Color_Img, int width, int height, int channel) {

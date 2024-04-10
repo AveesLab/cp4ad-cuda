@@ -4,11 +4,8 @@
 #ifdef __cplusplus
 extern "C" {
 #endif
-void test()
-
-
+void GrayKernel();
 #ifdef __cplusplus
 }
 #endif
-
 #endif
