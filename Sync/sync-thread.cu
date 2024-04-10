@@ -9,7 +9,7 @@ __global__ void ReverseKernel(int *arr)
 	int idx_inv = N - idx - 1;
 	temp[idx] = arr[idx];
 
-	__syncthreads();
+	//__syncthreads();
 
 	arr[idx] = temp[idx_inv];
 }
@@ -29,6 +29,7 @@ int main(void)
 
 	cudaMemcpy( d_arr, h_arr, N * sizeof(int), cudaMemcpyHostToDevice );
 	ReverseKernel<<<1, N>>>(d_arr);
+	//cudaDeviceSynchronize();
 	cudaMemcpy( result_arr, d_arr, N * sizeof(int), cudaMemcpyDeviceToHost );
 	for (int i = 0; i < N; i++)
 	{

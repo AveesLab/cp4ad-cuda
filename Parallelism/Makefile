@@ -1,7 +1,7 @@
 CC = g++
 CFLAGS = -W -Wall
-SRCS = color2gray.cpp
-TARGET = simple
+SRCS = cv-color2gray.cpp
+TARGET = cvGray
 OPENCV := $(shell pkg-config opencv4 --libs --cflags)
 LIBS = $(OPENCV)
 $(TARGET):$(SRCS)

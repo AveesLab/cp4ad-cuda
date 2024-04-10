@@ -2,10 +2,6 @@
 #include <stdint.h>
 #include <time.h>
 
-int width = 224;
-int height = 224;
-int channel = 3;
-
 
 
 __global__ void GrayKernel( uint8_t* Gray_Img, uint8_t* Color_Img, int width, int height, int channel) {
@@ -22,14 +18,18 @@ __global__ void GrayKernel( uint8_t* Gray_Img, uint8_t* Color_Img, int width, in
         Luminance = Color_Img[R_idx] * 0.21 + Color_Img[G_idx] * 0.72 + Color_Img[B_idx] * 0.07;
         if (Luminance > 255) Luminance = 255;
         
-        int G_idx = gx + gy * height;
-        Gray_Img[G_idx] = Luminance;
+        int Gray_idx = gx + gy * height;
+        Gray_Img[Gray_idx] = Luminance;
     }
 }
 
 int main(void) {
-    uint8_t Color_Img[width * height];
-    uint8_t Gray_Img[width * height * channel];
+	int width = 224;
+	int height = 224;
+	int channel = 3;
+	
+    uint8_t Color_Img[width * height * channel];
+    uint8_t Gray_Img[width * height];
     
     uint8_t* dev_Color_Img = NULL;
     uint8_t* dev_Gray_Img = NULL;
@@ -44,9 +44,9 @@ int main(void) {
     dim3 dimGrid((width + dimBlock.x - 1)/ dimBlock.x, (height + dimBlock.y - 1) / dimBlock.y, 1);
 
     clock_t start = clock();
-    GrayKernel<<<>>>;
-    cudaDeviceSynchronize();
+    GrayKernel<<<dimGrid, dimBlock>>>(dev_Gray_Img, dev_Color_Img, width, height, channel);
     clock_t end = clock();
+	cudaDeviceSynchronize();
 
     cudaMemcpy( dev_Gray_Img, Gray_Img, width * height * channel * sizeof(uint8_t), cudaMemcpyDeviceToHost );
 	
@@ -54,7 +54,7 @@ int main(void) {
 	cudaFree( dev_Gray_Img );
 	
     double execution_time = (double)(end - start) / CLOCKS_PER_SEC;
-    
+	printf("Excution time: %d usec\n", (int) (execution_time * 1000000));
 	return 0;
 
 }
