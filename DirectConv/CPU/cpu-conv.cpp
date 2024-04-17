@@ -10,8 +10,8 @@ using namespace std;
 
 
 int main(void) {
-    int width = 224;
-    int height = 224;
+    int width = 480;
+    int height = 480;
     int kernel_size = 3;
     int stride = 1;
     int padding = 1;
