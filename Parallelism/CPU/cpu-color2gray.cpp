@@ -22,8 +22,7 @@ int main(void) {
     for (int y = 0; y < height; y++) {
 		for (int x = 0; x < width; x++) {
 			
-			//Gray_Img.at<uchar>(y, x) =
-			
+			Gray_Img.at<uchar>(y, x) = Resize_Img.at<cv::Vec3b>(y, x)[2] * 0.21 + Resize_Img.at<cv::Vec3b>(y, x)[1] * 0.72 + Resize_Img.at<cv::Vec3b>(y, x)[0] * 0.07;
 		}
 	}
     clock_t end = clock();
