@@ -10,7 +10,7 @@ __global__ void conv_kernel( uint8_t* dev_input, uint8_t* dev_output, int8_t* FI
     int gy = blockIdx.y * blockDim.y + threadIdx.y; 
     int gx = blockIdx.x * blockDim.x + threadIdx.x;
 
-    if (gx <  && gy < ) {
+    if (gx < width_out && gy < height_out) {
         int sum = 0;
         int cx = stride * gx + (kernel_size / 2);
         int cy = stride * gy + (kernel_size / 2);
@@ -33,11 +33,11 @@ void conv_gpu(uint8_t* input, uint8_t* output, int width_in, int height_in, int 
     uint8_t* dev_output = NULL;
 	int8_t* dev_Filter = NULL;
   
-    cudaMalloc( (void**)&dev_input,  );
-    cudaMalloc( (void**)&dev_output,  );
+    cudaMalloc( (void**)&dev_input, width_in * height_in * in_channel * sizeof(uint8_t) );
+    cudaMalloc( (void**)&dev_output, width_out * height_out * out_channel * sizeof(uint8_t) );
     
 	cudaMalloc( (void**)&dev_Filter, 9 * sizeof(int8_t) );
-    cudaMemcpy( dev_input, input, , cudaMemcpyHostToDevice );
+    cudaMemcpy( dev_input, input, width_in * height_in * in_channel * sizeof(uint8_t) , cudaMemcpyHostToDevice );
 	
 	cudaMemcpy( dev_Filter, Filter, 9 * sizeof(int8_t), cudaMemcpyHostToDevice );
 
@@ -49,7 +49,7 @@ void conv_gpu(uint8_t* input, uint8_t* output, int width_in, int height_in, int 
 	cudaDeviceSynchronize();
 	clock_t end = clock();
 
-    cudaMemcpy( output, dev_output, , cudaMemcpyDeviceToHost );
+    cudaMemcpy( output, dev_output, width_out * height_out * out_channel * sizeof(uint8_t), cudaMemcpyDeviceToHost );
 	
     cudaFree( dev_input );
 	cudaFree( dev_Filter );
