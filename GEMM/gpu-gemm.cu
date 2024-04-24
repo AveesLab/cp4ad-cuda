@@ -13,7 +13,7 @@ __global__ void kernelGEMM( float* C, float* A, float* B, int matsize, int alpha
 		float sum = 0.0f;
 		for (int k = 0; k < matsize; k++) {
 			int idxA = gy * matsize + k;
-			int idxB = k * matsize + gy;
+			int idxB = k * matsize + gx;
 			sum += A[idxA] * B[idxB];
 		}
 		int idxC = gy * matsize + gx;
